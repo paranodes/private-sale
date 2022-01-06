@@ -375,9 +375,9 @@ contract HauntedHouse is Ownable {
             require(whitelisted[msg.sender], "CONTRIBUTE: Not whitelisted.");
         }
 
-        IERC20(BASE).transferFrom(msg.sender, address(this), amountOfBase);
         contributed[msg.sender] += amountOfBase;
         totalSold += amountOfBase;
+        IERC20(BASE).transferFrom(msg.sender, address(this), amountOfBase);
     }
 
     function claim() external {
@@ -398,8 +398,8 @@ contract HauntedHouse is Ownable {
 
         uint256 amountOfTokens = contributed[msg.sender].div(tokenPerBase);
 
-        IERC20(TOKEN).transfer(msg.sender, amountOfTokens);
         claimed[msg.sender] = true;
+        IERC20(TOKEN).transfer(msg.sender, amountOfTokens);
     }
 
     function refund() external {
@@ -420,8 +420,8 @@ contract HauntedHouse is Ownable {
 
         uint256 amountOfBase = contributed[msg.sender].div(tokenPerBase);
 
-        IERC20(BASE).transfer(msg.sender, amountOfBase);
         refunded[msg.sender] = true;
+        IERC20(BASE).transfer(msg.sender, amountOfBase);
     }
 
     function remainingAlloc(address user) external view returns (uint256) {
